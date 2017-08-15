@@ -27,11 +27,11 @@ class FailListener
         $attemptKey = sprintf('attempt.%s', $event->clientID);
         if ($event->cache->has($attemptKey) && (int)$event->cache->get($attemptKey) <= (int)config('jwt.attempts')) {
             $event->cache->increment($attemptKey);
-            return true;
+            return (int)$event->cache->get($attemptKey) < (int)config('jwt.attempts');
         }
 
         $event->cache->put($attemptKey, 1, config('jwt.attempts_exp'));
 
-        return false;
+        return true;
     }
 }
