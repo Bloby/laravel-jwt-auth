@@ -20,7 +20,12 @@ class JWTAuthServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-        //
+        $configPath = config_path('jwt.php');
+        if (!\Illuminate\Support\Facades\File::exists($configPath)) {
+            $this->publishes([
+                __DIR__ . '/../config/config.php' => $configPath
+            ]);
+        }
     }
 
 	/**
@@ -30,13 +35,6 @@ class JWTAuthServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-        $configPath = config_path('jwt.php');
-        if (!\Illuminate\Support\Facades\File::exists($configPath)) {
-            $this->publishes([
-                __DIR__ . '/../config/config.php' => $configPath
-            ]);
-        }
-
         $this->app->singleton('jwt.auth', function ($app) {
             $auth = new \JWTAuth\JWTAuth(
                 $app['request'],
