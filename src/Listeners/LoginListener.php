@@ -29,9 +29,9 @@ class LoginListener
     {
         $attemptKey = sprintf('attempt.%s', $event->clientID);
         if ($event->cache->has($attemptKey) && (int)$event->cache->get($attemptKey) >= (int)config('jwt.attempts')) {
-            throw new AttemptException(sprintf('You are blocked on %s min! You made many attempts at authentication.', config('jwt.attempts')));
+            throw new AttemptException(sprintf('You are blocked on %s min! You made many attempts at authentication.', config('jwt.attempts_exp')));
         }
-        
+
         $event->cache->forget($attemptKey);
     }
 }
