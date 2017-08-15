@@ -107,7 +107,7 @@ class JWTAuth
      * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @return $this
      */
-    protected function setUser(UserContract $user)
+    protected function setUser(User $user)
     {
         $this->_user = $user;
         return $this;
@@ -380,6 +380,8 @@ class JWTAuth
         $this->fireLoginEvent();
 
         $this->setUser($user);
+
+        $this->createToken($user);
     }
 
     public function fireAttemptEvent()
