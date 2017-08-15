@@ -9,7 +9,7 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Request\Request;
+use Request;
 use JWTAuth\Providers\Storage\CacheAdapter;
 
 abstract class AuthBaseEvent
