@@ -25,7 +25,7 @@ class FailListener
     public function handle(Fail $event)
     {
         $attemptKey = sprintf('attempt.%s', $event->clientID);
-        if ($event->cache->has($attemptKey) && $event->cache->get($attemptKey) <= config('jwt.attempts')) {
+        if ($event->cache->has($attemptKey) && (int)$event->cache->get($attemptKey) <= (int)config('jwt.attempts')) {
             $event->cache->increment($attemptKey);
             return true;
         }
