@@ -130,7 +130,7 @@ class CacheAdapter implements StorageInterface
      */
     protected function cache()
     {
-        if (! method_exists($this->cache, 'tags')) {
+        if (!$this->cache instanceof TaggableStore) {
             return $this->cache;
         }
 

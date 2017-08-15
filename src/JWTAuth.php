@@ -352,7 +352,7 @@ class JWTAuth
      * @param  array  $credentials
      * @return bool
      */
-    public function validateCredentials(UserContract $user, array $credentials)
+    public function validateCredentials(User $user, array $credentials)
     {
         $plain = $credentials['password'];
 
@@ -366,7 +366,7 @@ class JWTAuth
      * @param  bool  $remember
      * @return void
      */
-    public function login(AuthenticatableContract $user, $remember = false)
+    public function login(User $user, $remember = false)
     {
         // If the user should be permanently "remembered" by the application we will
         // queue a permanent cookie that contains the encrypted copy of the user
