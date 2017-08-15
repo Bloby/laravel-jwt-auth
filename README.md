@@ -68,6 +68,49 @@ return [
 ```
 
 # Usage
+Authenticate
 ```php
-$DIDs = MOR::getDIDs($client_id);
+try
+{
+    JWTAuth::validateToken(JWTAuth::getToken());
+    
+    if (!JWTAuth::attempt()) {
+        return response()->json(['reason' => 'user_not_found', 'message' => 'User with provided credentials not found.'], 404);
+    }
+}
+catch (AttemptException $e)
+{
+    return response()->json(['reason' => 'attempt_locked', 'message' => $e->getMessage()], $e->getStatusCode());
+}
+catch (TokenUnavailableException $e)
+{
+    return response()->json(['reason' => 'token_unavailable', 'message' => $e->getMessage()], $e->getStatusCode());
+}
+catch (TokenExpiredException $e)
+{
+    return response()->json(['reason' => 'token_expired', 'message' => $e->getMessage()], $e->getStatusCode());
+}
+catch (TokenInvalidException $e)
+{
+    return response()->json(['reason' => 'token_invalid', 'message' => $e->getMessage()], $e->getStatusCode());
+}
+catch (JWTException $e)
+{
+    return response()->json(['reason' => 'token_not_provided', 'message' => $e->getMessage()], $e->getStatusCode());
+}
+```
+
+Get user
+```php
+$user = JWTAuth::user();
+```
+
+Get token as string
+```php
+$tokenString = (string)JWTAuth::getToken();
+```
+
+Get token as object (\Lcobucci\JWT\Token)
+```php
+$tokenObject = JWTAuth::getToken();
 ```
