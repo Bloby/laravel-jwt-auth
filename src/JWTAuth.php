@@ -49,6 +49,11 @@ class JWTAuth
     /**
      * @var string
      */
+    protected $_header_mark;
+
+    /**
+     * @var string
+     */
     protected $_token_name;
 
     /**
@@ -87,6 +92,7 @@ class JWTAuth
         $this->_aud = $this->config('aud');
         $this->_expiration = $this->config('expiration');
         $this->_token_header = $this->config('token_header');
+        $this->_header_mark = $this->config('header_mark');
         $this->_token_name = $this->config('token_name');
 
         $this->_username = $this->config('username');
@@ -166,7 +172,7 @@ class JWTAuth
         }
 
         if ($this->request->hasHeader($this->_token_header)) {
-            $token = $this->request->header($this->_token_header);
+            $token = $this->parseHeader($this->_header_mark, $this->request->header($this->_token_header));
         }
         elseif ($this->request->has($this->_token_name)) {
             $token = $this->request->input($this->_token_name);
@@ -178,6 +184,11 @@ class JWTAuth
         $token = $this->parseToken($token);
 
         return $token;
+    }
+
+    public function parseHeader($mark, $header)
+    {
+        return preg_replace(sprintf('~^%s\s+~', $mark), '', $header);
     }
 
     /**
