@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static mixed config($name)
  * @method static string username()
  * @method static $this setUsername($username)
+ * @method static int getExpirationTime()
  *
  * @see \JWTAuth\JWTAuth
  * @see \JWTAuth\Facades\JWTAuth

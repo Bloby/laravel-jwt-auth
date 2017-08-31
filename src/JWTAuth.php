@@ -102,6 +102,14 @@ class JWTAuth
     }
 
     /**
+     * @return int|mixed
+     */
+    public function getExpirationTime()
+    {
+        return $this->_expiration;
+    }
+
+    /**
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function user()
@@ -110,7 +118,7 @@ class JWTAuth
     }
 
     /**
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable $user
      * @return $this
      */
     protected function setUser(User $user)
